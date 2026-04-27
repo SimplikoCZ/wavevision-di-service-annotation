@@ -1,0 +1,7 @@
+services:
+  test:
+    build: .
+    volumes:
+      - .:/app
+    environment:
+      - PHP_IDE_CONFIG=serverName=di-service-annotation

@@ -114,12 +114,14 @@ class ExtractServices
 				if ($fileValidator->containsErrors($pathname, $className)) {
 					continue;
 				}
+				try {
+					require_once $pathname;
+				} catch (\Throwable $e) {
+					continue;
+				}
 				$serviceAnnotation = $this->getAnnotation($className);
 				if ($serviceAnnotation !== null) {
 					$service = new Service($serviceAnnotation, $tokenizerResult, $file);
-					$this->configuration->getOutput()->writeln(
-						"Processing annotation in class: $className"
-					);
 					$services[$className] = $service;
 				}
 			}
@@ -133,9 +135,18 @@ class ExtractServices
 	 */
 	private function getAnnotation(string $className): ?DIService
 	{
-		$annotation = $this->annotationReader->getClassAnnotation(new ReflectionClass($className), DIService::class);
+		try {
+			$reflectionClass = new ReflectionClass($className);
+		} catch (\ReflectionException $e) {
+			return null;
+		}
+		$annotation = $this->annotationReader->getClassAnnotation($reflectionClass, DIService::class);
 		if ($annotation instanceof DIService) {
 			return $annotation;
+		}
+		$attributes = $reflectionClass->getAttributes(DIService::class);
+		if (isset($attributes[0])) {
+			return $attributes[0]->newInstance();
 		}
 		return null;
 	}

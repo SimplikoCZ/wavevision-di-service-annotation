@@ -1,5 +1,5 @@
 parameters:
-    excludes_analyse:
+    excludePaths:
         - tests/DIServiceAnnotationTests/Services/FatalError.php
     tmpDir: %currentWorkingDirectory%/temp
     level: max

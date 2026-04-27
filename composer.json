@@ -17,6 +17,12 @@
       "email": "vit@wavevision.com"
     }
   ],
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/SimplikoCZ/wavevision-utils"
+    }
+  ],
   "autoload": {
     "psr-4": {
       "Wavevision\\": "src/"
@@ -28,18 +34,21 @@
     }
   },
   "config": {
-    "sort-packages": true
+    "sort-packages": true,
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
   },
   "require": {
-    "php": ">=7.4",
-    "doctrine/annotations": "^1.8",
-    "nette/finder": "^2.5",
-    "wavevision/utils": "^2.13"
+    "php": "^8.5",
+    "doctrine/annotations": "^2.0",
+    "nette/finder": "^3.0",
+    "wavevision/utils": "dev-master"
   },
   "require-dev": {
-    "mikey179/vfsstream": "^1.6",
-    "php-coveralls/php-coveralls": "^2.1",
-    "phpunit/phpunit": "^9.4",
+    "mikey179/vfsstream": "^1.6.8",
+    "php-coveralls/php-coveralls": "^2.7",
+    "phpunit/phpunit": "^11.0",
     "wavevision/coding-standard": "^6.0"
   },
   "extra": {

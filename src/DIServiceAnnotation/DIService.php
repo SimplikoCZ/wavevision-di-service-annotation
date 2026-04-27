@@ -5,28 +5,21 @@ namespace Wavevision\DIServiceAnnotation;
 /**
  * @Annotation
  * @Target("CLASS")
+ * @NamedArgumentConstructor
  */
+#[\Attribute(\Attribute::TARGET_CLASS)]
 final class DIService
 {
 
-	public ?string $name = null;
-
-	public bool $enableInject = true;
-
-	public bool $generateComponent = false;
-
-	public bool $generateFactory = false;
-
-	public bool $generateInject = false;
-
-	/**
-	 * @var string[]
-	 */
-	public array $params = [];
-
-	/**
-	 * @var string[]
-	 */
-	public array $tags = [];
+	public function __construct(
+		public ?string $name = null,
+		public bool $enableInject = true,
+		public bool $generateComponent = false,
+		public bool $generateFactory = false,
+		public bool $generateInject = false,
+		public array $params = [],
+		public array $tags = [],
+	) {
+	}
 
 }

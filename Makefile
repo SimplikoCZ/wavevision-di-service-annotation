@@ -42,9 +42,6 @@ phpstan:
 
 # Tests
 
-test:
-	$(bin)/phpunit
-
 test-coverage: reset
 	$(bin)/phpunit --coverage-html=$(coverage)
 
@@ -62,3 +59,13 @@ else
 endif
 
 ci: check-syntax phpcs phpstan test-coverage-report
+
+docker-build:
+	docker compose build
+
+test: docker-build
+	docker compose run --rm test
+
+docker-composer-update: docker-build
+	docker compose run --rm test composer update
+

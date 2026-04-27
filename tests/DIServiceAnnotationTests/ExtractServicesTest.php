@@ -29,7 +29,6 @@ class ExtractServicesTest extends TestCase
 
 	public function testRun(): void
 	{
-		$this->setOutputCallback(fn() => null);
 		$tempDir = Path::join(__DIR__, '..', '..', 'temp');
 		$cacheFile = Path::join($tempDir, Cache::FILE);
 		FileSystem::delete($cacheFile);
@@ -52,7 +51,6 @@ class ExtractServicesTest extends TestCase
 
 	public function testNoNamespace(): void
 	{
-		$this->setOutputCallback(fn() => null);
 		vfsStream::setup('r');
 		$servicesDirectory = vfsStream::url('r/d');
 		FileSystem::createDir($servicesDirectory);
@@ -71,7 +69,7 @@ class ExtractServicesTest extends TestCase
 		$this->expectException(InvalidState::class);
 		$this->expectExceptionMessage("Namespace is missing for 'Control'. At least one level namespace is required.");
 		$extractServices = new ExtractServices(
-			(new Configuration($servicesDirectory, ''))
+			(new Configuration($servicesDirectory, ''))->setOutput(new VoidOutput())
 		);
 		$extractServices->run();
 	}
@@ -142,6 +140,7 @@ class ExtractServicesTest extends TestCase
 				]
 			)
 			->setRegenerate(false)
+			->setOutput(new VoidOutput())
 			->enableFileValidation(__DIR__ . '/../bootstrap.php', $tempDir);
 		$configuration->setInjectGenerator($configuration->getInjectGenerator());
 		/** @var DefaultGenerator $injectGenerator */
