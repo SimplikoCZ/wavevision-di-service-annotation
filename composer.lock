@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "37c6d67310bc98f47a7ce09c99b5bcdb",
+    "content-hash": "0fe3fef347a6713d3130e18a63324e31",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -426,16 +426,16 @@
         },
         {
             "name": "wavevision/utils",
-            "version": "dev-master",
+            "version": "3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SimplikoCZ/wavevision-utils.git",
-                "reference": "85373556e69e4fc93b2464c0723ba5080501cf2e"
+                "reference": "f6cd970330deb39b9775fdc83f257e8332ee18ed"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SimplikoCZ/wavevision-utils/zipball/85373556e69e4fc93b2464c0723ba5080501cf2e",
-                "reference": "85373556e69e4fc93b2464c0723ba5080501cf2e",
+                "url": "https://api.github.com/repos/SimplikoCZ/wavevision-utils/zipball/f6cd970330deb39b9775fdc83f257e8332ee18ed",
+                "reference": "f6cd970330deb39b9775fdc83f257e8332ee18ed",
                 "shasum": ""
             },
             "require": {
@@ -445,7 +445,7 @@
                 "ext-zip": "*",
                 "nette/finder": "^3.0",
                 "nette/utils": "^4.0",
-                "php": ">=8.5",
+                "php": "^8.4",
                 "softcreatr/jsonpath": "^1.0"
             },
             "require-dev": {
@@ -454,7 +454,6 @@
                 "phpunit/phpunit": "^13.0",
                 "wavevision/coding-standard": "^6.0"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "phpstan": []
@@ -488,9 +487,9 @@
             ],
             "description": "Useful PHP utilities and helpers.",
             "support": {
-                "source": "https://github.com/SimplikoCZ/wavevision-utils/tree/master"
+                "source": "https://github.com/SimplikoCZ/wavevision-utils/tree/3.1"
             },
-            "time": "2026-04-27T07:59:49+00:00"
+            "time": "2026-04-27T13:44:03+00:00"
         }
     ],
     "packages-dev": [
@@ -4441,13 +4440,11 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "wavevision/utils": 20
-    },
+    "stability-flags": {},
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "^8.5"
+        "php": "^8.4"
     },
     "platform-dev": {},
     "plugin-api-version": "2.9.0"

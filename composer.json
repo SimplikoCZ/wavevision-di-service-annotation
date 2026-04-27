@@ -40,10 +40,10 @@
     }
   },
   "require": {
-    "php": "^8.5",
+    "php": "^8.4",
     "doctrine/annotations": "^2.0",
     "nette/finder": "^3.0",
-    "wavevision/utils": "dev-master"
+    "wavevision/utils": "^3.0"
   },
   "require-dev": {
     "mikey179/vfsstream": "^1.6.8",
