@@ -9,12 +9,20 @@ use Nette\Utils\Strings;
 use ReflectionClass;
 use SplFileInfo;
 use Wavevision\Utils\Arrays;
+use Wavevision\Utils\Tokenizer\TokenizeResult;
 use Wavevision\Utils\Tokenizer\Tokenizer;
 use function implode;
+use function is_array;
 use function ksort;
 use function sprintf;
+use function token_get_all;
 use const T_CLASS;
 use const T_INTERFACE;
+use const T_NAME_QUALIFIED;
+use const T_NAMESPACE;
+use const T_NS_SEPARATOR;
+use const T_STRING;
+use const T_WHITESPACE;
 
 class ExtractServices
 {
@@ -109,6 +117,16 @@ class ExtractServices
 			$pathname = $file->getPathname();
 			$tokenizerResult = $this->tokenizer->getStructureNameFromFile($pathname, [T_CLASS, T_INTERFACE]);
 			if ($tokenizerResult !== null) {
+				if ($tokenizerResult->getNamespace() === null) {
+					$namespace = $this->extractNamespace($pathname);
+					if ($namespace !== null) {
+						$tokenizerResult = new TokenizeResult(
+							$tokenizerResult->getToken(),
+							$tokenizerResult->getName(),
+							$namespace
+						);
+					}
+				}
 				/** @var class-string<object> $className */
 				$className = $tokenizerResult->getFullyQualifiedName();
 				if ($fileValidator->containsErrors($pathname, $className)) {
@@ -147,6 +165,37 @@ class ExtractServices
 		$attributes = $reflectionClass->getAttributes(DIService::class);
 		if (isset($attributes[0])) {
 			return $attributes[0]->newInstance();
+		}
+		return null;
+	}
+
+	private function extractNamespace(string $pathname): ?string
+	{
+		$tokens = token_get_all(FileSystem::read($pathname));
+		$inNamespace = false;
+		$namespace = '';
+		foreach ($tokens as $token) {
+			if (!is_array($token)) {
+				if ($inNamespace && $token === ';') {
+					return $namespace ?: null;
+				}
+				continue;
+			}
+			if ($token[0] === T_NAMESPACE) {
+				$inNamespace = true;
+				$namespace = '';
+				continue;
+			}
+			if (!$inNamespace || $token[0] === T_WHITESPACE) {
+				continue;
+			}
+			if (in_array($token[0], [T_STRING, T_NS_SEPARATOR])) {
+				$namespace .= $token[1];
+			} elseif ($token[0] === T_NAME_QUALIFIED) {
+				return $token[1];
+			} else {
+				break;
+			}
 		}
 		return null;
 	}
