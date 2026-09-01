@@ -1,5 +1,5 @@
 {
-  "name": "wavevision/di-service-annotation",
+  "name": "simplikocz/di-service-annotation",
   "description": "Register DI services using annotation for Nette Framework.",
   "type": "library",
   "license": "MIT",
